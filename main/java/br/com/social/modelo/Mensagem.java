@@ -22,15 +22,19 @@ public class Mensagem {
 	private Long id;
 
 	@Lob
-	@Column(name = "mensagem_mensagem")
+	@Column(name = "mensagem_mensagem", nullable = false)
 	private String mensagem;
 
-	@Column(name = "hora_mensagem")
+	@Column(name = "hora_mensagem", nullable = false)
 	private LocalDateTime hora;
 
 	@ManyToOne
-	@JoinColumn(name = "usuariofk_mensagem", nullable = false)
-	private Usuario usuario;
+	@JoinColumn(name = "emissorfk_mensagem", nullable = false)
+	private Usuario emissor;
+
+	@ManyToOne
+	@JoinColumn(name = "receptorfk_mensagem", nullable = false)
+	private Usuario receptor;
 
 	public Long getId() {
 		return id;
@@ -56,12 +60,20 @@ public class Mensagem {
 		this.hora = hora;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getEmissor() {
+		return emissor;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setEmissor(Usuario emissor) {
+		this.emissor = emissor;
+	}
+
+	public Usuario getReceptor() {
+		return receptor;
+	}
+
+	public void setReceptor(Usuario receptor) {
+		this.receptor = receptor;
 	}
 
 }

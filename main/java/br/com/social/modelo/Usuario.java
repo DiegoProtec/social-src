@@ -31,8 +31,11 @@ public class Usuario {
 	@Column(name = "nome_usuario")
 	private String nome;
 
-	@OneToMany(mappedBy = "usuario", targetEntity = Mensagem.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Mensagem> mensagens;
+	@OneToMany(mappedBy = "emissor", targetEntity = Mensagem.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Mensagem> perguntas;
+
+	@OneToMany(mappedBy = "receptor", targetEntity = Mensagem.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Mensagem> respostas;
 
 	public Long getId() {
 		return id;
@@ -66,9 +69,20 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	@Override
-	public String toString() {
-		return "usuario: " + getEmail();
+	public List<Mensagem> getPerguntas() {
+		return perguntas;
+	}
+
+	public void setPerguntas(List<Mensagem> perguntas) {
+		this.perguntas = perguntas;
+	}
+
+	public List<Mensagem> getRespostas() {
+		return respostas;
+	}
+
+	public void setRespostas(List<Mensagem> respostas) {
+		this.respostas = respostas;
 	}
 
 }
