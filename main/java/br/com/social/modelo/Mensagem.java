@@ -1,5 +1,7 @@
 package br.com.social.modelo;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,22 +18,25 @@ public class Mensagem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_mensagem")
-	private Integer id;
-	
+	@Column(name = "id_mensagem")
+	private Long id;
+
 	@Lob
-	@Column(name="mensagem_mensagem")
+	@Column(name = "mensagem_mensagem")
 	private String mensagem;
-	
+
+	@Column(name = "hora_mensagem")
+	private LocalDateTime hora;
+
 	@ManyToOne
-	@JoinColumn(name="usuariofk_mensagem")
+	@JoinColumn(name = "usuariofk_mensagem", nullable = false)
 	private Usuario usuario;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -43,6 +48,14 @@ public class Mensagem {
 		this.mensagem = mensagem;
 	}
 
+	public LocalDateTime getHora() {
+		return hora;
+	}
+
+	public void setHora(LocalDateTime hora) {
+		this.hora = hora;
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -50,5 +63,5 @@ public class Mensagem {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 }

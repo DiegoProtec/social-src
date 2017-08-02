@@ -20,7 +20,7 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario")
-	private Integer id;
+	private Long id;
 
 	@Column(name = "email_usuario")
 	private String email;
@@ -34,11 +34,11 @@ public class Usuario {
 	@OneToMany(mappedBy = "usuario", targetEntity = Mensagem.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Mensagem> mensagens;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
