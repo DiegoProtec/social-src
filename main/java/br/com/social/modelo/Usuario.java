@@ -35,8 +35,8 @@ public class Usuario {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", targetEntity = Contato.class, fetch = FetchType.LAZY)
 	private List<Contato> contatos;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "participante", targetEntity = ParticipanteConversa.class, fetch = FetchType.LAZY)
-	private List<ParticipanteConversa> conversas;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "participante", targetEntity = ConversasParticipantes.class, fetch = FetchType.LAZY)
+	private List<ConversasParticipantes> conversas;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "emissor", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
 	private List<Mensagem> mensagens;
@@ -78,8 +78,8 @@ public class Usuario {
 		return listaSegura;
 	}
 
-	public List<ParticipanteConversa> getConversas() {
-		List<ParticipanteConversa> listaSegura = Collections.unmodifiableList(this.conversas);
+	public List<ConversasParticipantes> getConversas() {
+		List<ConversasParticipantes> listaSegura = Collections.unmodifiableList(this.conversas);
 		return listaSegura;
 	}
 
@@ -92,7 +92,7 @@ public class Usuario {
 		this.contatos.add(contato);
 	}
 
-	public void adicionaConversas(ParticipanteConversa conversa) {
+	public void adicionaConversas(ConversasParticipantes conversa) {
 		this.conversas.add(conversa);
 	}
 

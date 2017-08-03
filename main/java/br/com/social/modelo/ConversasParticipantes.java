@@ -11,11 +11,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rl_conversa_usuario")
-public class ParticipanteConversa {
+public class ConversasParticipantes {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_participanete")
+	@Column(name = "id_participante")
 	private int id;
 
 	@ManyToOne

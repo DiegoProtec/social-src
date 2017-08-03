@@ -28,13 +28,6 @@ public class Mensagem {
 	@Column(name = "hora_envio_mensagem", nullable = false)
 	private LocalDateTime horaEnvio;
 
-	@Column(name = "hora_recebida_mensagem", nullable = true)
-	private LocalDateTime horaRecebida;
-
-	@Column(name = "hora_visualizada_mensagem", nullable = true)
-	private LocalDateTime horaVisualizada;
-
-	// status da mensagem - enviada 0, recebida 1, lida 2
 	@Column(name = "status_mensagem", nullable = false, columnDefinition = "int  0", insertable = false, updatable = true)
 	private int status;
 
