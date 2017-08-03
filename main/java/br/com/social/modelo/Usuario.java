@@ -1,5 +1,6 @@
 package br.com.social.modelo;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,11 +32,31 @@ public class Usuario {
 	@Column(name = "nome_usuario")
 	private String nome;
 
-	@OneToMany(mappedBy = "emissor", targetEntity = Mensagem.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	/*
+	 * todos os relacionamentos abaixo com as entidades contato e mensagem são
+	 * bidirecionais por isso a entidade usuario precisa: realizar update cascade
+	 * carregamento lazy adicionar listas das entidades fracas
+	 */
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "emissor", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
 	private List<Mensagem> perguntas;
 
-	@OneToMany(mappedBy = "receptor", targetEntity = Mensagem.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receptor", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
 	private List<Mensagem> respostas;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "solicitante", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
+	private List<Contato> solicitantes;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "solicitado", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
+	private List<Contato> solicitados;
+
+	public void adicionaEmissor(Mensagem mensagem) {
+		this.perguntas.add(mensagem);
+	}
+
+	public void adicionaReceptor(Mensagem mensagem) {
+		this.respostas.add(mensagem);
+	}
 
 	public Long getId() {
 		return id;
@@ -70,19 +91,23 @@ public class Usuario {
 	}
 
 	public List<Mensagem> getPerguntas() {
-		return perguntas;
-	}
-
-	public void setPerguntas(List<Mensagem> perguntas) {
-		this.perguntas = perguntas;
+		List<Mensagem> listaSegura = Collections.unmodifiableList(this.perguntas);
+		return listaSegura;
 	}
 
 	public List<Mensagem> getRespostas() {
-		return respostas;
+		List<Mensagem> listaSegura = Collections.unmodifiableList(this.respostas);
+		return listaSegura;
 	}
 
-	public void setRespostas(List<Mensagem> respostas) {
-		this.respostas = respostas;
+	public List<Contato> getSolicitantes() {
+		List<Contato> listaSegura = Collections.unmodifiableList(this.solicitantes);
+		return listaSegura;
+	}
+
+	public List<Contato> getSolicitados() {
+		List<Contato> listaSegura = Collections.unmodifiableList(this.solicitados);
+		return listaSegura;
 	}
 
 }

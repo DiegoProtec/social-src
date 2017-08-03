@@ -24,11 +24,12 @@ public class UsuarioBean {
 
 	@Inject
 	private UsuarioDao usuarioDao;
-	
+
 	@Transactional
-	public void cadastrar() {
+	public String cadastrar() {
 		usuarioDao.salvar(usuario);
 		System.out.println(usuario + " cadastrado com sucesso!");
+		return "usuario?faces-redirect=true";
 	}
 
 }
