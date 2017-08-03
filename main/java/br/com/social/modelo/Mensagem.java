@@ -25,16 +25,26 @@ public class Mensagem {
 	@Column(name = "mensagem_mensagem", nullable = false)
 	private String mensagem;
 
-	@Column(name = "hora_mensagem", nullable = false)
-	private LocalDateTime hora;
+	@Column(name = "hora_envio_mensagem", nullable = false)
+	private LocalDateTime horaEnvio;
+
+	@Column(name = "hora_recebida_mensagem", nullable = true)
+	private LocalDateTime horaRecebida;
+
+	@Column(name = "hora_visualizada_mensagem", nullable = true)
+	private LocalDateTime horaVisualizada;
+
+	// status da mensagem - enviada 0, recebida 1, lida 2
+	@Column(name = "status_mensagem", nullable = false, columnDefinition = "int  0", insertable = false, updatable = true)
+	private int status;
 
 	@ManyToOne
-	@JoinColumn(name = "emissorfk_mensagem", nullable = false, unique = false)
+	@JoinColumn(name = "id_conversafk", nullable = false)
+	private Conversa conversa;
+
+	@ManyToOne
+	@JoinColumn(name = "id_usuariofk", nullable = false)
 	private Usuario emissor;
-
-	@ManyToOne
-	@JoinColumn(name = "receptorfk_mensagem", nullable = false, unique = false)
-	private Usuario receptor;
 
 	public int getId() {
 		return id;
@@ -53,27 +63,27 @@ public class Mensagem {
 	}
 
 	public LocalDateTime getHora() {
-		return hora;
+		return horaEnvio;
 	}
 
 	public void setHora(LocalDateTime hora) {
-		this.hora = hora;
+		this.horaEnvio = hora;
 	}
 
-	public Usuario getEmissor() {
+	public Conversa getConversa() {
+		return conversa;
+	}
+
+	public void setConversa(Conversa conversa) {
+		this.conversa = conversa;
+	}
+
+	public Usuario getUsuario() {
 		return emissor;
 	}
 
-	public void setEmissor(Usuario emissor) {
-		this.emissor = emissor;
-	}
-
-	public Usuario getReceptor() {
-		return receptor;
-	}
-
-	public void setReceptor(Usuario receptor) {
-		this.receptor = receptor;
+	public void setUsuario(Usuario usuario) {
+		this.emissor = usuario;
 	}
 
 }

@@ -32,31 +32,14 @@ public class Usuario {
 	@Column(name = "nome_usuario")
 	private String nome;
 
-	/*
-	 * todos os relacionamentos abaixo com as entidades contato e mensagem são
-	 * bidirecionais por isso a entidade usuario precisa: realizar update cascade
-	 * carregamento lazy adicionar listas das entidades fracas
-	 */
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", targetEntity = Contato.class, fetch = FetchType.LAZY)
+	private List<Contato> contatos;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "participante", targetEntity = ParticipanteConversa.class, fetch = FetchType.LAZY)
+	private List<ParticipanteConversa> conversas;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "emissor", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
-	private List<Mensagem> perguntas;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receptor", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
-	private List<Mensagem> respostas;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "solicitante", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
-	private List<Contato> solicitantes;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "solicitado", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
-	private List<Contato> solicitados;
-
-	public void adicionaEmissor(Mensagem mensagem) {
-		this.perguntas.add(mensagem);
-	}
-
-	public void adicionaReceptor(Mensagem mensagem) {
-		this.respostas.add(mensagem);
-	}
+	private List<Mensagem> mensagens;
 
 	public Long getId() {
 		return id;
@@ -90,24 +73,31 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public List<Mensagem> getPerguntas() {
-		List<Mensagem> listaSegura = Collections.unmodifiableList(this.perguntas);
+	public List<Contato> getContatos() {
+		List<Contato> listaSegura = Collections.unmodifiableList(this.contatos);
 		return listaSegura;
 	}
 
-	public List<Mensagem> getRespostas() {
-		List<Mensagem> listaSegura = Collections.unmodifiableList(this.respostas);
+	public List<ParticipanteConversa> getConversas() {
+		List<ParticipanteConversa> listaSegura = Collections.unmodifiableList(this.conversas);
 		return listaSegura;
 	}
 
-	public List<Contato> getSolicitantes() {
-		List<Contato> listaSegura = Collections.unmodifiableList(this.solicitantes);
+	public List<Mensagem> getMensagens() {
+		List<Mensagem> listaSegura = Collections.unmodifiableList(this.mensagens);
 		return listaSegura;
 	}
 
-	public List<Contato> getSolicitados() {
-		List<Contato> listaSegura = Collections.unmodifiableList(this.solicitados);
-		return listaSegura;
+	public void adicionaContatos(Contato contato) {
+		this.contatos.add(contato);
+	}
+
+	public void adicionaConversas(ParticipanteConversa conversa) {
+		this.conversas.add(conversa);
+	}
+
+	public void adicionaMensagens(Mensagem mensagem) {
+		this.mensagens.add(mensagem);
 	}
 
 }

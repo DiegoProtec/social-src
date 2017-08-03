@@ -5,8 +5,14 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<h:commandLink value="contatos" action="listaContatos" />
+<h:form>
 
-<h:commandLink value="conversas" action="listaConversas" />
+	<!-- lista de contatos -->
+
+	<div>
+		<h:commandButton value="Adicionar" action="#{conversaBean.adicionar}" />
+	</div>
+
+</h:form>
 
 </html>
