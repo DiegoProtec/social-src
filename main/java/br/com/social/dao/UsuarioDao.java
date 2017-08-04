@@ -13,6 +13,7 @@ public class UsuarioDao {
 	EntityManager manager;
 
 	public void salvar(Usuario usuario) {
+		System.out.println("metodo salvar dao");
 		manager.persist(usuario);
 	}
 
@@ -25,7 +26,7 @@ public class UsuarioDao {
 		query.setParameter("pSenha", usuario.getSenha());
 
 		try {
-			Usuario result = query.getSingleResult();
+			query.getSingleResult();
 		} catch (NoResultException e) {
 			return false;
 		}

@@ -17,24 +17,28 @@ public class UsuarioBean {
 
 	private Usuario usuario = new Usuario();
 
+	@Inject
+	private UsuarioDao usuarioDao;
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	@Inject
-	private UsuarioDao usuarioDao;
-
 	@Transactional
 	public void cadastrar() {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		System.out.println("metodo cadastrar bean");
 		usuarioDao.salvar(usuario);
 		System.out.println(usuario + " cadastrado com sucesso!");
-		FacesContext context = FacesContext.getCurrentInstance();
+
 		try {
-			context.getExternalContext()
-					.redirect(context.getExternalContext().getRequestContextPath() + "/index.xhtml");
+			context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath()
+					+ "/index.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 }
