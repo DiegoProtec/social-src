@@ -1,6 +1,9 @@
 package br.com.social.bean;
 
+import java.io.IOException;
+
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -18,18 +21,20 @@ public class UsuarioBean {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	@Inject
 	private UsuarioDao usuarioDao;
 
 	@Transactional
-	public String cadastrar() {
+	public void cadastrar() {
 		usuarioDao.salvar(usuario);
 		System.out.println(usuario + " cadastrado com sucesso!");
-		return "usuario?faces-redirect=true";
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext()
+					.redirect(context.getExternalContext().getRequestContextPath() + "/index.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

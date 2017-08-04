@@ -28,7 +28,7 @@ public class Mensagem {
 	@Column(name = "hora_envio_mensagem", nullable = false)
 	private LocalDateTime horaEnvio;
 
-	@Column(name = "status_mensagem", nullable = false, columnDefinition = "int default 0", insertable = false, updatable = true)
+	@Column(name = "status_mensagem", nullable = false)
 	private int status;
 
 	@ManyToOne
