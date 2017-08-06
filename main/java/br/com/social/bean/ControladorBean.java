@@ -12,13 +12,20 @@ import javax.transaction.Transactional;
 @RequestScoped
 public class ControladorBean {
 
-	private FacesContext context = FacesContext.getCurrentInstance();
+	private FacesContext context;
 	private Map<String, String> params;
+	private String pagina;
+
+	public ControladorBean() {
+		this.context = FacesContext.getCurrentInstance();
+		this.pagina = "";
+	}
 
 	@Transactional
 	public void navegar(String pagina) {
 		try {
-			context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + pagina);
+			getContext().getExternalContext()
+					.redirect(getContext().getExternalContext().getRequestContextPath() + pagina);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -26,13 +33,34 @@ public class ControladorBean {
 
 	@Transactional
 	public void navegar() {
-		params = context.getExternalContext().getRequestParameterMap();
-		String pagina = params.get("pagina");
+		setParams(getContext().getExternalContext().getRequestParameterMap());
+		setPagina(getParams().get("pagina"));
 		try {
-			context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + pagina);
+			getContext().getExternalContext()
+					.redirect(getContext().getExternalContext().getRequestContextPath() + getPagina());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public FacesContext getContext() {
+		return context;
+	}
+
+	public Map<String, String> getParams() {
+		return params;
+	}
+
+	private void setParams(Map<String, String> params) {
+		this.params = params;
+	}
+
+	public String getPagina() {
+		return pagina;
+	}
+
+	public void setPagina(String pagina) {
+		this.pagina = pagina;
 	}
 
 }

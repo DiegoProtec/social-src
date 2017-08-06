@@ -16,6 +16,12 @@
 					</h:commandLink>
 				</h:form></li>
 			<li><h:form rendered="#{usuarioLogado != null}">
+					<h:commandLink value="#{usuarioLogado.nome}"
+						action="#{controladorBean.navegar}">
+						<f:param name="pagina" value="/usuario/usuario.xhtml" />
+					</h:commandLink>
+				</h:form></li>
+			<li><h:form rendered="#{usuarioLogado != null}">
 					<h:commandLink value="Logout" action="#{loginBean.deslogar}" />
 				</h:form></li>
 		</ul>

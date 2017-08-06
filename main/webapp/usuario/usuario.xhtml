@@ -5,14 +5,31 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-	
+
 
 <ui:composition template="../_template.xhtml">
 
-	<ui:define name="titulo"><h:outputLabel value="#{usuarioLogado.nome}"/></ui:define>
-	
-	<ui:define name="conteudo"></ui:define>
-	
+	<ui:define name="conteudo">
+		<h:form>
+			<ul>
+				<li><h:commandLink value="contatos"
+						action="#{contatoBean.listaContatos}">
+						<f:param name="pagina"
+							value="/usuario/contato/listaContatos.xhtml" />
+					</h:commandLink></li>
+
+				<li><h:commandLink value="conversas"
+						action="#{conversaBean.listaConversas}">
+						<f:param name="pagina"
+							value="/usuario/conversa/listaConversas.xhtml" />
+					</h:commandLink></li>
+			</ul>
+		</h:form>
+
+		<ui:insert name="corpoMenu"></ui:insert>
+
+	</ui:define>
+
 </ui:composition>
 
 </html>

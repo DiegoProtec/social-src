@@ -1,17 +1,15 @@
 package br.com.social.bean;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import br.com.social.dao.UsuarioDao;
 import br.com.social.modelo.Usuario;
 
-@Named
-@RequestScoped
+@Model
 public class LoginBean {
 
 	private ControladorBean bean = new ControladorBean();

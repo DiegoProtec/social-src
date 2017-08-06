@@ -10,22 +10,23 @@ import br.com.social.modelo.Usuario;
 public class UsuarioDao {
 
 	@PersistenceContext
-	EntityManager manager;
+	private EntityManager manager;
 	private Usuario usuario = null;
+	private String jpql = "";
+	private TypedQuery<Usuario> query = null;
 
 	public void salvar(Usuario usuario) {
-		manager.persist(usuario);
+		this.manager.persist(usuario);
 	}
 
 	public Usuario consultaUsuario(Usuario usuario) {
-		String jpql = "select u from Usuario u where u.email = :pEmail and u.senha = :pSenha";
-
-		TypedQuery<Usuario> query = manager.createQuery(jpql, Usuario.class);
-		query.setParameter("pEmail", usuario.getEmail());
-		query.setParameter("pSenha", usuario.getSenha());
+		this.jpql = "select u from Usuario u where u.email = :pEmail and u.senha = :pSenha";
+		this.query = this.manager.createQuery(this.jpql, Usuario.class);
+		this.query.setParameter("pEmail", usuario.getEmail());
+		this.query.setParameter("pSenha", usuario.getSenha());
 
 		try {
-			this.usuario = query.getSingleResult();
+			this.usuario = this.query.getSingleResult();
 		} catch (NoResultException e) {
 			return this.usuario;
 		}
@@ -33,13 +34,12 @@ public class UsuarioDao {
 	}
 
 	public Usuario consultaUsuario(String email) {
-		String jpql = "select u from Usuario u where u.email = :pEmail";
-
-		TypedQuery<Usuario> query = manager.createQuery(jpql, Usuario.class);
-		query.setParameter("pEmail", email);
+		this.jpql = "select u from Usuario u where u.email = :pEmail";
+		this.query = this.manager.createQuery(this.jpql, Usuario.class);
+		this.query.setParameter("pEmail", email);
 
 		try {
-			this.usuario = query.getSingleResult();
+			this.usuario = this.query.getSingleResult();
 		} catch (NoResultException e) {
 			return this.usuario;
 		}

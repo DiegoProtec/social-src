@@ -1,17 +1,15 @@
 package br.com.social.bean;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import br.com.social.dao.UsuarioDao;
 import br.com.social.modelo.Usuario;
 
-@Named
-@RequestScoped
+@Model
 public class UsuarioBean {
 
 	private ControladorBean bean = new ControladorBean();
@@ -30,7 +28,7 @@ public class UsuarioBean {
 	@Transactional
 	public void cadastrar() {
 		if (null != usuarioDao.consultaUsuario(getUsuario().getEmail())) {
-			this.context.addMessage(null, new FacesMessage(
+			getContext().addMessage(null, new FacesMessage(
 					"O email " + getUsuario().getEmail() + " já está cadastrado, por favor informe um novo!"));
 		} else {
 			usuarioDao.salvar(getUsuario());
@@ -40,11 +38,21 @@ public class UsuarioBean {
 				getContext().getExternalContext().getSessionMap().put("usuarioLogado", getUsuario());
 
 			} else {
-				this.context.addMessage(null, new FacesMessage("Usuário não encontrado."));
+				getContext().addMessage(null, new FacesMessage("Usuário não encontrado."));
 			}
 		}
 		getContext().getExternalContext().getFlash().setKeepMessages(true);
 		bean.navegar(getPagina());
+	}
+
+	@Transactional
+	public void contatos() {
+
+	}
+
+	@Transactional
+	public void conversas() {
+
 	}
 
 	private void setUsuario(Usuario usuario) {
