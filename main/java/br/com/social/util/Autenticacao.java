@@ -10,9 +10,6 @@ import br.com.social.modelo.Usuario;
 
 public class Autenticacao implements PhaseListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -20,7 +17,7 @@ public class Autenticacao implements PhaseListener {
 		FacesContext context = evento.getFacesContext();
 		String pagina = context.getViewRoot().getViewId();
 
-		if ("/index.xhtml".equals(pagina)) {
+		if ("/index.xhtml".equals(pagina) || "/usuario/cadastroUsuario.xhtml".equals(pagina)) {
 			return;
 		}
 

@@ -11,13 +11,15 @@
 	<ui:define name="titulo">Chat Social</ui:define>
 
 	<ui:define name="conteudo">
-		<h:messages globalOnly="true"/>
-
-		<h:form id="novoUsuario">
-			<h:commandLink value="Cadastrar-se" action="usuario/cadastroUsuario" />
+		<h:messages globalOnly="true" />
+		<h:form id="novoUsuario" rendered="#{usuarioLogado == null}">
+			<h:commandLink value="cadastrar-se"
+				action="#{controladorBean.navegar}">
+				<f:param name="pagina" value="/usuario/cadastroUsuario.xhtml" />
+			</h:commandLink>
 		</h:form>
 
-		<h:form id="login">
+		<h:form id="login" rendered="#{usuarioLogado == null}">
 
 			<div>
 				<h:outputLabel value="usuário:" for="email" />

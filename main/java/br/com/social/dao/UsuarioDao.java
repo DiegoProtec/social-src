@@ -11,14 +11,13 @@ public class UsuarioDao {
 
 	@PersistenceContext
 	EntityManager manager;
+	private Usuario usuario = null;
 
 	public void salvar(Usuario usuario) {
-		System.out.println("metodo salvar dao");
 		manager.persist(usuario);
 	}
 
-	public boolean consultaUsuario(Usuario usuario) {
-
+	public Usuario consultaUsuario(Usuario usuario) {
 		String jpql = "select u from Usuario u where u.email = :pEmail and u.senha = :pSenha";
 
 		TypedQuery<Usuario> query = manager.createQuery(jpql, Usuario.class);
@@ -26,10 +25,24 @@ public class UsuarioDao {
 		query.setParameter("pSenha", usuario.getSenha());
 
 		try {
-			query.getSingleResult();
+			this.usuario = query.getSingleResult();
 		} catch (NoResultException e) {
-			return false;
+			return this.usuario;
 		}
-		return true;
+		return this.usuario;
+	}
+
+	public Usuario consultaUsuario(String email) {
+		String jpql = "select u from Usuario u where u.email = :pEmail";
+
+		TypedQuery<Usuario> query = manager.createQuery(jpql, Usuario.class);
+		query.setParameter("pEmail", email);
+
+		try {
+			this.usuario = query.getSingleResult();
+		} catch (NoResultException e) {
+			return this.usuario;
+		}
+		return this.usuario;
 	}
 }

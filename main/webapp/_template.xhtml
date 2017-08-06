@@ -9,10 +9,16 @@
 <h:head />
 <h:body>
 	<div id="cabecalho">
-
-		<h:form rendered="#{usuarioLogado != null}">
-			<h:commandLink value="Logout" action="#{loginBean.deslogar}" />
-		</h:form>
+		<ul>
+			<li><h:form>
+					<h:commandLink value="social" action="#{controladorBean.navegar}">
+						<f:param name="pagina" value="/index.xhtml" />
+					</h:commandLink>
+				</h:form></li>
+			<li><h:form rendered="#{usuarioLogado != null}">
+					<h:commandLink value="Logout" action="#{loginBean.deslogar}" />
+				</h:form></li>
+		</ul>
 
 		<h1>
 			<ui:insert name="titulo"></ui:insert>

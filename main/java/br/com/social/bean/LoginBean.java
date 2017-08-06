@@ -1,10 +1,7 @@
 package br.com.social.bean;
 
-import java.io.IOException;
-
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,10 +14,14 @@ import br.com.social.modelo.Usuario;
 @RequestScoped
 public class LoginBean {
 
+	private ControladorBean bean = new ControladorBean();
 	private Usuario usuario = new Usuario();
+	private FacesContext context;
+	private String pagina;
 
-	public Usuario getUsuario() {
-		return usuario;
+	public LoginBean() {
+		this.context = FacesContext.getCurrentInstance();
+		this.pagina = "/index.xhtml";
 	}
 
 	@Inject
@@ -28,35 +29,40 @@ public class LoginBean {
 
 	@Transactional
 	public void logar() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		boolean existe = usuarioDao.consultaUsuario(usuario);
-		String pagina = "";
-
-		try {
-			if (existe) {
-				context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
-				pagina = "/usuario/usuario.xhtml";
-			} else {
-				context.addMessage(null, new FacesMessage("Usuário não encontrado."));
-				pagina = "/index.xhtml";
-			}
-			context.getExternalContext().getFlash().setKeepMessages(true);
-			context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + pagina);
-		} catch (IOException e) {
-			e.printStackTrace();
+		setUsuario(usuarioDao.consultaUsuario(getUsuario()));
+		if (null != getUsuario()) {
+			getContext().getExternalContext().getSessionMap().put("usuarioLogado", getUsuario());
+			setPagina("/usuario/usuario.xhtml");
+		} else {
+			this.context.addMessage(null, new FacesMessage("Usuário não encontrado."));
 		}
-
+		getContext().getExternalContext().getFlash().setKeepMessages(true);
+		bean.navegar(getPagina());
 	}
 
 	@Transactional
 	public void deslogar() {
-		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-		try {
-			context.getSessionMap().remove("usuarioLogado");
-			context.redirect(context.getRequestContextPath() + "/index.xhtml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		getContext().getExternalContext().getSessionMap().remove("usuarioLogado");
+		bean.navegar(getPagina());
+	}
 
+	public FacesContext getContext() {
+		return this.context;
+	}
+
+	private void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public String getPagina() {
+		return this.pagina;
+	}
+
+	private void setPagina(String pagina) {
+		this.pagina = pagina;
 	}
 }
