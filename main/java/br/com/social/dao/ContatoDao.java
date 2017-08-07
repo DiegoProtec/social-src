@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import br.com.social.modelo.Contato;
+import br.com.social.modelo.Usuario;
 
 public class ContatoDao {
 

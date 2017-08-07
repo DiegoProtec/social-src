@@ -2,18 +2,50 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<h:form>
+<ui:composition template="../usuario.xhtml">
 
-	<!-- procura contato por email -->
-	<!-- procura contato por nome -->
+	<ui:define name="corpoMenu">
 
-	<div>
-		<h:commandButton value="Adicionar" action="#{contatoBean.adicionar}" />
-	</div>
+		<h:messages globalOnly="true" />
 
-</h:form>
+		<h:form id="procuraContato">
+
+			<div>
+				<h:outputLabel value="email:" for="email" />
+				<h:inputText id="email" value="#{usuarioBean.usuario.email}"
+					required="true" />
+			</div>
+
+			<div>
+				<h:commandButton value="procurar" action="#{contatoBean.procurar}">
+					<f:param name="pagina" value="/usuario/contato/listaContatos.xhtml"></f:param>
+					<f:ajax execute="email" render="contatos"/>
+				</h:commandButton>
+			</div>
+
+			<h:dataTable id="contatos" var="usuario" value="#{contatoBean.contatos}">
+				<h:column>
+					<ui:repeat var="usuario" value="#{usuarios}">
+					#{usuario.nome}
+				</ui:repeat>
+				</h:column>
+
+			</h:dataTable>
+
+			<div>
+				<h:commandButton value="adicionar" action="#{contatoBean.adicionar}">
+					<f:param name="pagina" value="/usuario/contato/listaContatos.xhtml"></f:param>
+				</h:commandButton>
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
 
 </html>

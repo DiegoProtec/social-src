@@ -1,5 +1,8 @@
 package br.com.social.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -12,6 +15,7 @@ public class UsuarioDao {
 	@PersistenceContext
 	private EntityManager manager;
 	private Usuario usuario = null;
+	private List<Usuario> usuarios = new ArrayList<>();
 	private String jpql = "";
 	private TypedQuery<Usuario> query = null;
 
@@ -45,4 +49,18 @@ public class UsuarioDao {
 		}
 		return this.usuario;
 	}
+
+	public List<Usuario> procura(String email) {
+		this.jpql = "select u from Usuario u where u.email = :pEmail";
+		this.query = this.manager.createQuery(this.jpql, Usuario.class);
+		this.query.setParameter("pEmail", email);
+
+		try {
+			this.usuarios = this.query.getResultList();
+		} catch (NoResultException e) {
+			return this.usuarios;
+		}
+		return this.usuarios;
+	}
+
 }

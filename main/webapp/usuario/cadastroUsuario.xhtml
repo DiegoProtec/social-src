@@ -19,6 +19,7 @@
 				<h:outputLabel value="nome:" for="nome" />
 				<h:inputText id="nome" value="#{usuarioBean.usuario.nome}"
 					required="true" />
+				<h:message for="nome"></h:message>
 			</div>
 
 			<div>
@@ -27,6 +28,7 @@
 					required="true">
 					<f:passThroughAttribute name="type" value="email" />
 				</h:inputText>
+				<h:message for="email"></h:message>
 			</div>
 
 			<div>
@@ -35,6 +37,7 @@
 					required="true">
 					<f:passThroughAttribute name="type" value="password" />
 				</h:inputText>
+				<h:message for="senha"></h:message>
 			</div>
 
 			<div>

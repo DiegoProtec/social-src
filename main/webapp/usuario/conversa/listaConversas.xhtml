@@ -10,11 +10,19 @@
 
 	<ui:define name="corpoMenu">
 
-		<h:form id="novaConversa">
-			<h:commandLink value="+ conversa" action="#{controladorBean.navegar}">
-				<f:param name="pagina" value="/conversa/cadastroConversa.xhtml" />
-			</h:commandLink>
+		<h:messages globalOnly="true" />
+
+		<h:form id="procuraConversas">
+
+			<div>
+				<h:commandButton value="adicionar">
+					<f:param name="pagina"
+						value="/usuario/conversas/listaConversas.xhtml"></f:param>
+				</h:commandButton>
+			</div>
+
 		</h:form>
+
 	</ui:define>
 
 </ui:composition>

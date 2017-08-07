@@ -1,5 +1,9 @@
 package br.com.social.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -14,8 +18,10 @@ public class UsuarioBean {
 
 	private ControladorBean bean = new ControladorBean();
 	private Usuario usuario = new Usuario();
+	private List<Usuario> usuarios = new ArrayList<>();
 	private FacesContext context;
 	private String pagina;
+	private Map<String, String> params;
 
 	public UsuarioBean() {
 		this.context = FacesContext.getCurrentInstance();
@@ -46,6 +52,20 @@ public class UsuarioBean {
 	}
 
 	@Transactional
+	public void procurar(String email) {
+		setParams(getContext().getExternalContext().getRequestParameterMap());
+		setPagina(getParams().get("pagina"));
+		setUsuarios(usuarioDao.procura(email));
+		if (null != getUsuario()) {
+			getContext().getExternalContext().getSessionMap().put("usuarios", getUsuarios());
+		} else {
+			getContext().addMessage(null, new FacesMessage("Usuário: " + email + ", não encontrado."));
+		}
+		getContext().getExternalContext().getFlash().setKeepMessages(true);
+		bean.navegar(getPagina());
+	}
+
+	@Transactional
 	public void contatos() {
 
 	}
@@ -63,6 +83,14 @@ public class UsuarioBean {
 		return this.usuario;
 	}
 
+	public List<Usuario> getUsuarios() {
+		return this.usuarios;
+	}
+
+	private void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
 	private void setPagina(String pagina) {
 		this.pagina = pagina;
 	}
@@ -73,6 +101,14 @@ public class UsuarioBean {
 
 	public FacesContext getContext() {
 		return context;
+	}
+
+	public Map<String, String> getParams() {
+		return params;
+	}
+
+	private void setParams(Map<String, String> params) {
+		this.params = params;
 	}
 
 }
