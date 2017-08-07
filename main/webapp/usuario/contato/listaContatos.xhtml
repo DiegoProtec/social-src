@@ -9,15 +9,9 @@
 <ui:composition template="../usuario.xhtml">
 
 	<ui:define name="corpoMenu">
-		<h:dataTable var="usuario" value="#{contatoBean.contatos}">
-			<h:column>
-				<ui:repeat var="contato" value="#{contatos}">
-					#{contato.nome}
-				</ui:repeat>
-			</h:column>
-
-		</h:dataTable>
-
+		
+		<!-- lista de contatos -->
+		
 		<h:form id="novoContato">
 			<h:commandLink value="+ contato" action="#{controladorBean.navegar}">
 				<f:param name="pagina" value="/usuario/contato/cadastroContato.xhtml" />

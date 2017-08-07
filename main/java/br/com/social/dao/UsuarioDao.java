@@ -14,53 +14,77 @@ public class UsuarioDao {
 
 	@PersistenceContext
 	private EntityManager manager;
-	private Usuario usuario = null;
+	private TypedQuery<Usuario> query;
 	private List<Usuario> usuarios = new ArrayList<>();
-	private String jpql = "";
-	private TypedQuery<Usuario> query = null;
+	private Usuario usuario = null;
 
 	public void salvar(Usuario usuario) {
-		this.manager.persist(usuario);
+		getManager().persist(usuario);
 	}
 
 	public Usuario consultaUsuario(Usuario usuario) {
-		this.jpql = "select u from Usuario u where u.email = :pEmail and u.senha = :pSenha";
-		this.query = this.manager.createQuery(this.jpql, Usuario.class);
-		this.query.setParameter("pEmail", usuario.getEmail());
-		this.query.setParameter("pSenha", usuario.getSenha());
-
+		String jpql = "select u from Usuario u where u.email = :pEmail and u.senha = :pSenha";
+		setQuery(getManager().createQuery(jpql, Usuario.class));
+		getQuery().setParameter("pEmail", usuario.getEmail());
+		getQuery().setParameter("pSenha", usuario.getSenha());
 		try {
-			this.usuario = this.query.getSingleResult();
+			setUsuario(getQuery().getSingleResult());
 		} catch (NoResultException e) {
-			return this.usuario;
+			return getUsuario();
 		}
-		return this.usuario;
+		return getUsuario();
 	}
 
 	public Usuario consultaUsuario(String email) {
-		this.jpql = "select u from Usuario u where u.email = :pEmail";
-		this.query = this.manager.createQuery(this.jpql, Usuario.class);
-		this.query.setParameter("pEmail", email);
-
+		String jpql = "select u from Usuario u where u.email = :pEmail";
+		setQuery(getManager().createQuery(jpql, Usuario.class));
+		getQuery().setParameter("pEmail", email);
 		try {
-			this.usuario = this.query.getSingleResult();
+			setUsuario(getQuery().getSingleResult());
 		} catch (NoResultException e) {
-			return this.usuario;
+			return getUsuario();
 		}
-		return this.usuario;
+		return getUsuario();
 	}
 
-	public List<Usuario> procura(String email) {
-		this.jpql = "select u from Usuario u where u.email = :pEmail";
-		this.query = this.manager.createQuery(this.jpql, Usuario.class);
-		this.query.setParameter("pEmail", email);
-
+	public List<Usuario> procura(Usuario usuario) {
+		String jpql = "select u from Usuario u where u.nome like :pNome";
+		setQuery(getManager().createQuery(jpql, Usuario.class));
+		getQuery().setParameter("pNome", "%" + usuario.getNome() + "%");
 		try {
-			this.usuarios = this.query.getResultList();
+			setUsuarios(getQuery().getResultList());
 		} catch (NoResultException e) {
-			return this.usuarios;
+			return getUsuarios();
 		}
-		return this.usuarios;
+		return getUsuarios();
+	}
+
+	private EntityManager getManager() {
+		return manager;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	private TypedQuery<Usuario> getQuery() {
+		return query;
+	}
+
+	private void setQuery(TypedQuery<Usuario> query) {
+		this.query = query;
 	}
 
 }

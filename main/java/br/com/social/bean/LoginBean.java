@@ -39,7 +39,7 @@ public class LoginBean {
 	}
 
 	@Transactional
-	public void deslogar() {
+	public void deslogar() {		
 		getContext().getExternalContext().getSessionMap().remove("usuarioLogado");
 		bean.navegar(getPagina());
 	}

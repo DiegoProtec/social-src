@@ -1,32 +1,26 @@
 package br.com.social.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.inject.Model;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import br.com.social.dao.ContatoDao;
 import br.com.social.dao.UsuarioDao;
-import br.com.social.modelo.Contato;
 import br.com.social.modelo.Usuario;
 
 @Model
 public class ContatoBean {
 
+	private Usuario usuario = new Usuario();
+	private List<Usuario> usuarios = null;
 	private ControladorBean bean = new ControladorBean();
-	private List<Contato> contatos = new ArrayList<>();
-	private List<Usuario> usuarios = new ArrayList<>();
 	private FacesContext context;
 	private Map<String, String> params;
-	private String pagina;
-
-	@Inject
-	private ContatoDao contatoDao;
+	private String param;
 
 	@Inject
 	private UsuarioDao usuarioDao;
@@ -38,21 +32,20 @@ public class ContatoBean {
 	@Transactional
 	public void listaContatos() {
 		setParams(getContext().getExternalContext().getRequestParameterMap());
-		setPagina(getParams().get("pagina"));
-		setContatos(contatoDao.listaContatos());
-		getContext().getExternalContext().getSessionMap().put("listaContatos", getContatos());
-		bean.navegar(pagina);
+		setParam(getParams().get("pagina"));
+		bean.navegar(getParam());
 	}
 
-	@Transactional
-	public void procurar(String email) {
-		setUsuarios(usuarioDao.procura(email));
-		if (null != getUsuarios()) {
-			getContext().getExternalContext().getSessionMap().put("usuarios", getUsuarios());
-		} else {
-			getContext().addMessage(null, new FacesMessage("Usuário: " + email + ", não encontrado."));
+	public void procurar(AjaxBehaviorEvent ev) {
+		getUsuario().setNome((getUsuario().getNome().trim()));
+		if (!("" == getUsuario().getNome() || null == getUsuario().getNome() || !(getUsuario().getNome().isEmpty()))) {
+			setUsuarios(usuarioDao.procura(getUsuario()));
+			if (null != getUsuarios()) {
+				System.out.println("usuario: " + getUsuarios() + "encontrado");
+			} else {
+				System.out.println("usuario não encontrado.");
+			}
 		}
-		getContext().getExternalContext().getFlash().setKeepMessages(true);
 	}
 
 	@Transactional
@@ -60,13 +53,8 @@ public class ContatoBean {
 
 	}
 
-	private void setContatos(List<Contato> contatos) {
-		this.contatos = contatos;
-
-	}
-
-	public List<Contato> getContatos() {
-		return this.contatos;
+	public Usuario getUsuario() {
+		return this.usuario;
 	}
 
 	public List<Usuario> getUsuarios() {
@@ -78,23 +66,23 @@ public class ContatoBean {
 	}
 
 	public Map<String, String> getParams() {
-		return params;
+		return this.params;
 	}
 
-	private void setParams(Map<String, String> params) {
+	public void setParams(Map<String, String> params) {
 		this.params = params;
 	}
 
-	public String getPagina() {
-		return pagina;
+	public String getParam() {
+		return this.param;
 	}
 
-	public void setPagina(String pagina) {
-		this.pagina = pagina;
+	public void setParam(String param) {
+		this.param = param;
 	}
 
 	public FacesContext getContext() {
-		return context;
+		return this.context;
 	}
 
 }
