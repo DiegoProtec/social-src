@@ -6,25 +6,15 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<ui:composition template="../_template.xhtml">
-	<ui:define name="titulo">cadastre-se e divirta-se!</ui:define>
+<ui:composition template="/index.xhtml">
 
-	<ui:define name="conteudo">
+	<ui:define name="corpoIndex">
 
-		<h:messages globalOnly="true" />
-
-		<h:form>
+		<h:form id="login" rendered="#{usuarioLogado == null}">
 
 			<div>
-				<h:outputLabel value="nome:" for="nome" />
-				<h:inputText id="nome" value="#{usuarioBean.usuario.nome}"
-					required="true" />
-				<h:message for="nome"></h:message>
-			</div>
-
-			<div>
-				<h:outputLabel value="e-mail:" for="email" />
-				<h:inputText id="email" value="#{usuarioBean.usuario.email}"
+				<h:outputLabel value="usuário:" for="email" />
+				<h:inputText id="email" value="#{loginBean.usuario.email}"
 					required="true">
 					<f:passThroughAttribute name="type" value="email" />
 				</h:inputText>
@@ -33,7 +23,7 @@
 
 			<div>
 				<h:outputLabel value="senha:" for="senha" />
-				<h:inputText id="senha" value="#{usuarioBean.usuario.senha}"
+				<h:inputText id="senha" value="#{loginBean.usuario.senha}"
 					required="true">
 					<f:passThroughAttribute name="type" value="password" />
 				</h:inputText>
@@ -41,11 +31,12 @@
 			</div>
 
 			<div>
-				<h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrar}" />
+				<h:commandButton value="Entrar" action="#{loginBean.logar}" />
 			</div>
 
 		</h:form>
-
 	</ui:define>
+
 </ui:composition>
+
 </html>

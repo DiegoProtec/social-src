@@ -1,4 +1,4 @@
-package br.com.social.util;
+package br.com.social.converters;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

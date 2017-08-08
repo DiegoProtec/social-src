@@ -12,25 +12,30 @@
 
 	<div id="cabecalho">
 		<ul>
-			<li><h:form>
+			<li>
+				<h:form>
 					<h:commandLink value="social" action="#{controladorBean.navegar}">
-						<f:param name="pagina" value="/index.xhtml" />
+						<f:param name="pagina" value="/index.xhtml"></f:param>
 					</h:commandLink>
-				</h:form></li>
-			<li><h:form rendered="#{usuarioLogado != null}">
-					<h:commandLink value="#{usuarioLogado.nome}"
-						action="#{controladorBean.navegar}">
-						<f:param name="pagina" value="/usuario/usuario.xhtml" />
+				</h:form>
+			</li>
+			<li>
+				<h:form rendered="#{usuarioLogado != null}">
+					<h:commandLink value="#{usuarioLogado.nome}" action="#{controladorBean.navegar}">
+						<f:param name="pagina" value="/usuario/usuario.xhtml"></f:param>
 					</h:commandLink>
-				</h:form></li>
-			<li><h:form rendered="#{usuarioLogado != null}">
+				</h:form>
+			</li>
+			<li>
+				<h:form rendered="#{usuarioLogado != null}">
 					<h:commandLink value="Logout" action="#{loginBean.deslogar}" />
-				</h:form></li>
+				</h:form>
+			</li>
 		</ul>
 
-		<h1>
+		<h3>
 			<ui:insert name="titulo"></ui:insert>
-		</h1>
+		</h3>
 
 	</div>
 

@@ -3,6 +3,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.2"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+	<application>
+
+		<resource-bundle>
+			<base-name>ajuda-pt</base-name>
+			<var>hpt</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>retorno-pt</base-name>
+			<var>rpt</var>
+		</resource-bundle>
+
+	</application>
+
 	<lifecycle>
 		<phase-listener>br.com.social.util.Autenticacao</phase-listener>
 	</lifecycle>

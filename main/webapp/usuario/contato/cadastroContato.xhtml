@@ -14,7 +14,7 @@
 
 			<div>
 				<h:outputLabel value="email:" for="email" />
-				<h:inputText id="email" value="#{contatoBean.usuario.email}">
+				<h:inputText id="email" value="#{contatoBean.contato.email}">
 					<f:passThroughAttribute name="placeholder"
 						value="email@exemplo.com" />
 				</h:inputText>
@@ -34,7 +34,9 @@
 				</h:column>
 
 			</h:dataTable>
-
+			<div>
+				<h:commandButton value="adicionar" action="#{contatoBean.adicionar}" />
+			</div>
 		</h:form>
 
 	</ui:define>

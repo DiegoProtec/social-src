@@ -11,13 +11,15 @@ import br.com.social.modelo.Usuario;
 public class Autenticacao implements PhaseListener {
 
 	private static final long serialVersionUID = 1L;
+	private String pagina;
 
 	@Override
 	public void afterPhase(PhaseEvent evento) {
 		FacesContext context = evento.getFacesContext();
-		String pagina = context.getViewRoot().getViewId();
+		pagina = context.getViewRoot().getViewId();
+		System.out.println(pagina);
 
-		if ("/index.xhtml".equals(pagina) || "/usuario/cadastroUsuario.xhtml".equals(pagina)) {
+		if ("/index.xhtml".equals(pagina) || "/login.xhtml".equals(pagina) || "/cadastro.xhtml".equals(pagina)) {
 			return;
 		}
 
@@ -28,7 +30,7 @@ public class Autenticacao implements PhaseListener {
 		}
 
 		NavigationHandler handler = context.getApplication().getNavigationHandler();
-		handler.handleNavigation(context, null, "/index?faces-redirect=true");
+		handler.handleNavigation(context, null, "/login?faces-redirect=true");
 		context.renderResponse();
 	}
 

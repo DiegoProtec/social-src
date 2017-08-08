@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.inject.Model;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.social.dao.UsuarioDao;
+import br.com.social.modelo.Contato;
 import br.com.social.modelo.Usuario;
 
 @Model
@@ -19,7 +19,8 @@ public class ContatoBean {
 
 	private ControladorBean bean = new ControladorBean();
 	private Usuario usuario = new Usuario();
-	private List<Usuario> usuarios = null;
+	private Usuario contato = new Usuario();
+	private List<Contato> contatos = null;
 	private FacesContext context;
 	private Map<String, String> params;
 	private String param;
@@ -36,35 +37,32 @@ public class ContatoBean {
 	public void listaContatos() {
 		setParams(getContext().getExternalContext().getRequestParameterMap());
 		setParam(getParams().get("pagina"));
+		setContatos(getUsuario().getContatos());
+		if (null != getContatos()) {
+			getContext().getExternalContext().getSessionMap().put("contatos", getContatos());
+		} else {
+			System.out.println("você não tem contato adicionado");
+		}
 		bean.navegar(getParam());
 	}
 
 	public void procurarEmail(AjaxBehaviorEvent ev) {
-		getUsuario().setEmail((getUsuario().getEmail().trim()));
-		setUsuario(usuarioDao.procuraEmail(getUsuario()));
-		if (!(getUsuario().getEmail().equals(
-				((Usuario) getContext().getExternalContext().getSessionMap().get("usuarioLogado")).getEmail()))) {
-			if (null != getUsuario()) {
-				getContext().getExternalContext().getSessionMap().put("contato", getUsuario());
-				getCampos().add("contatosForm:email");
-				limpaDados();
+		getContato().setEmail(getContato().getEmail().trim());
+		if (!(getContato().getEmail().equals(getUsuario().getEmail()))) {
+			setContato(usuarioDao.procuraEmail(getContato()));
+			if (null != getContato()) {
+				getContext().getExternalContext().getSessionMap().put("contato", getContato());
 			} else {
 				System.out.println("usuario não encontrado.");
 			}
 		} else {
-			setUsuario(null);
+			setContato(null);
 		}
-	}
-
-	private void limpaDados() {
-		UIViewRoot view = getContext().getViewRoot();
-		view.resetValues(getContext(), getCampos());
-		this.setUsuario(null);
 	}
 
 	@Transactional
 	public void adicionar() {
-
+		
 	}
 
 	public Usuario getUsuario() {
@@ -75,14 +73,21 @@ public class ContatoBean {
 		this.usuario = usuario;
 	}
 
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
+	public Usuario getContato() {
+		return contato;
 	}
 
-	/*
-	 * private void setUsuarios(List<Usuario> usuarios) { this.usuarios = usuarios;
-	 * }
-	 */
+	public void setContato(Usuario contato) {
+		this.contato = contato;
+	}
+
+	public List<Contato> getContatos() {
+		return this.contatos;
+	}
+
+	private void setContatos(List<Contato> contatos) {
+		this.contatos = contatos;
+	}
 
 	public Map<String, String> getParams() {
 		return this.params;

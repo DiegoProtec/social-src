@@ -1,4 +1,4 @@
-package br.com.social.util;
+package br.com.social.converters;
 
 import java.sql.Date;
 import java.time.LocalDate;

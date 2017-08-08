@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 @RequestScoped
 public class ControladorBean {
 
-	private FacesContext context;
 	private Map<String, String> params;
+	private FacesContext context;
 	private String pagina;
 
 	public ControladorBean() {
@@ -24,8 +24,8 @@ public class ControladorBean {
 	@Transactional
 	public void navegar(String pagina) {
 		try {
-			getContext().getExternalContext()
-					.redirect(getContext().getExternalContext().getRequestContextPath() + pagina);
+			getContext().getExternalContext().redirect(getContext().getExternalContext().getRequestContextPath()
+					+ pagina);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -36,15 +36,11 @@ public class ControladorBean {
 		setParams(getContext().getExternalContext().getRequestParameterMap());
 		setPagina(getParams().get("pagina"));
 		try {
-			getContext().getExternalContext()
-					.redirect(getContext().getExternalContext().getRequestContextPath() + getPagina());
+			getContext().getExternalContext().redirect(getContext().getExternalContext().getRequestContextPath()
+					+ getPagina());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public FacesContext getContext() {
-		return context;
 	}
 
 	public Map<String, String> getParams() {
@@ -61,6 +57,10 @@ public class ControladorBean {
 
 	public void setPagina(String pagina) {
 		this.pagina = pagina;
+	}
+
+	public FacesContext getContext() {
+		return this.context;
 	}
 
 }

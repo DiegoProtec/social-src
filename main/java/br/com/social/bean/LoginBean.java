@@ -17,13 +17,13 @@ public class LoginBean {
 	private FacesContext context;
 	private String pagina;
 
-	public LoginBean() {
-		this.context = FacesContext.getCurrentInstance();
-		this.pagina = "/index.xhtml";
-	}
-
 	@Inject
 	private UsuarioDao usuarioDao;
+
+	public LoginBean() {
+		this.context = FacesContext.getCurrentInstance();
+		this.pagina = "/login.xhtml";
+	}
 
 	@Transactional
 	public void logar() {
@@ -32,20 +32,16 @@ public class LoginBean {
 			getContext().getExternalContext().getSessionMap().put("usuarioLogado", getUsuario());
 			setPagina("/usuario/usuario.xhtml");
 		} else {
-			this.context.addMessage(null, new FacesMessage("Usuário não encontrado."));
+			this.getContext().addMessage(null, new FacesMessage("Usuário não encontrado."));
 		}
 		getContext().getExternalContext().getFlash().setKeepMessages(true);
 		bean.navegar(getPagina());
 	}
 
 	@Transactional
-	public void deslogar() {		
+	public void deslogar() {
 		getContext().getExternalContext().getSessionMap().remove("usuarioLogado");
 		bean.navegar(getPagina());
-	}
-
-	public FacesContext getContext() {
-		return this.context;
 	}
 
 	private void setUsuario(Usuario usuario) {
@@ -63,4 +59,9 @@ public class LoginBean {
 	private void setPagina(String pagina) {
 		this.pagina = pagina;
 	}
+
+	public FacesContext getContext() {
+		return this.context;
+	}
+
 }

@@ -11,41 +11,25 @@
 	<ui:define name="titulo">Chat Social</ui:define>
 
 	<ui:define name="conteudo">
+
 		<h:messages globalOnly="true" />
-		<h:form id="novoUsuario" rendered="#{usuarioLogado == null}">
-			<h:commandLink value="cadastrar-se"
-				action="#{controladorBean.navegar}">
-				<f:param name="pagina" value="/usuario/cadastroUsuario.xhtml" />
-			</h:commandLink>
+
+		<h:form rendered="#{usuarioLogado == null}">
+			<ul>
+				<li><h:commandLink value="cadastrar-se"
+						action="#{controladorBean.navegar}">
+						<f:param name="pagina" value="/cadastro.xhtml" />
+					</h:commandLink></li>
+				<li><h:commandLink value="entrar"
+						action="#{controladorBean.navegar}">
+						<f:param name="pagina" value="/login.xhtml" />
+					</h:commandLink></li>
+			</ul>
 		</h:form>
 
-		<h:form id="login" rendered="#{usuarioLogado == null}">
-
-			<div>
-				<h:outputLabel value="usuário:" for="email" />
-				<h:inputText id="email" value="#{loginBean.usuario.email}"
-					required="true">
-					<f:passThroughAttribute name="type" value="email" />
-				</h:inputText>
-				<h:message for="email"></h:message>
-			</div>
-
-			<div>
-				<h:outputLabel value="senha:" for="senha" />
-				<h:inputText id="senha" value="#{loginBean.usuario.senha}"
-					required="true">
-					<f:passThroughAttribute name="type" value="password" />
-				</h:inputText>
-				<h:message for="senha"></h:message>
-			</div>
-
-			<div>
-				<h:commandButton value="Entrar" action="#{loginBean.logar}" />
-			</div>
-
-		</h:form>
+		<ui:insert name="corpoIndex"></ui:insert>
 	</ui:define>
-</ui:composition>
 
+</ui:composition>
 
 </html>
