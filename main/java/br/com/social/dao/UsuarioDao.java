@@ -47,7 +47,19 @@ public class UsuarioDao {
 		return getUsuario();
 	}
 
-	public List<Usuario> procura(Usuario usuario) {
+	public Usuario procuraEmail(Usuario usuario) {
+		String jpql = "select u from Usuario u where u.email = :pEmail";
+		setQuery(getManager().createQuery(jpql, Usuario.class));
+		getQuery().setParameter("pEmail", usuario.getEmail());
+		try {
+			setUsuario(getQuery().getSingleResult());
+		} catch (NoResultException e) {
+			return getUsuario();
+		}
+		return getUsuario();
+	}
+
+	public List<Usuario> procuraNome(Usuario usuario) {
 		String jpql = "select u from Usuario u where u.nome like :pNome";
 		setQuery(getManager().createQuery(jpql, Usuario.class));
 		getQuery().setParameter("pNome", "%" + usuario.getNome() + "%");

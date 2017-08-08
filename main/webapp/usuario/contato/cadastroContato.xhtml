@@ -10,23 +10,27 @@
 
 	<ui:define name="corpoMenu">
 
-		<h:form prependId="false">
+		<h:form id="contatosForm">
 
 			<div>
-
-				<h:outputLabel value="nome:" for="nome" />
-				<h:inputText id="nome" value="#{contatoBean.usuario.nome}">
-					<f:ajax execute="nome" listener="#{contatoBean.procurar}"
-						render="tbcontatos" />
+				<h:outputLabel value="email:" for="email" />
+				<h:inputText id="email" value="#{contatoBean.usuario.email}">
+					<f:passThroughAttribute name="placeholder"
+						value="email@exemplo.com" />
 				</h:inputText>
 			</div>
 
+			<div>
+				<h:commandButton value="procurar">
+					<f:ajax execute="email" listener="#{contatoBean.procurarEmail}"
+						render="tbcontatos" update="contatosForm:email" resetValues="true" />
+				</h:commandButton>
+			</div>
 
-			<h:dataTable id="tbcontatos" value="#{contatoBean.usuarios}"
-				var="usuario">
+			<h:dataTable id="tbcontatos" value="#{contato}" var="contato">
 				<h:column>
-					<f:facet name="header">Usuários...</f:facet>
-						#{usuario.nome}
+					<f:facet name="header">Usuário</f:facet>
+						#{contato.nome}
 				</h:column>
 
 			</h:dataTable>
