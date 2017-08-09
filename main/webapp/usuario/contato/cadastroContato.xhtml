@@ -14,24 +14,11 @@
 
 			<div>
 				<h:outputLabel value="email:" for="email" />
-				<h:inputText id="email" value="#{contatoBean.contato.email}">
+				<h:inputText id="email" value="#{contatoBean.usuario.email}">
 					<f:passThroughAttribute name="placeholder"
 						value="email@exemplo.com" />
 				</h:inputText>
 			</div>
-
-			<div>
-				<h:commandButton value="procurar">
-					<f:ajax execute="email" listener="#{contatoBean.procurarEmail}"
-						render="tbcontatos" />
-				</h:commandButton>
-			</div>
-
-			<h:outputLabel value="Contatos..." />
-			<h:selectManyCheckbox id="tbcontatos" rendered="#{contato} != null" value="#{contatoBean.usuario.contatosid}">
-				<f:selectItems value="#{contato}" var="contato"
-					itemValue="#{contato.id}" itemLabel="contato.nome" />
-			</h:selectManyCheckbox>
 
 			<div>
 				<h:commandButton value="adicionar" action="#{contatoBean.adicionar}"

@@ -75,6 +75,14 @@ public class UsuarioDao {
 		return manager;
 	}
 
+	private TypedQuery<Usuario> getQuery() {
+		return query;
+	}
+
+	private void setQuery(TypedQuery<Usuario> query) {
+		this.query = query;
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -89,14 +97,6 @@ public class UsuarioDao {
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
-	}
-
-	private TypedQuery<Usuario> getQuery() {
-		return query;
-	}
-
-	private void setQuery(TypedQuery<Usuario> query) {
-		this.query = query;
 	}
 
 }

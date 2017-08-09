@@ -6,8 +6,6 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
-import br.com.social.modelo.Usuario;
-
 public class Autenticacao implements PhaseListener {
 
 	private static final long serialVersionUID = 1L;
@@ -17,15 +15,12 @@ public class Autenticacao implements PhaseListener {
 	public void afterPhase(PhaseEvent evento) {
 		FacesContext context = evento.getFacesContext();
 		pagina = context.getViewRoot().getViewId();
-		System.out.println(pagina);
 
 		if ("/index.xhtml".equals(pagina) || "/login.xhtml".equals(pagina) || "/cadastro.xhtml".equals(pagina)) {
 			return;
 		}
 
-		Usuario usuario = (Usuario) context.getExternalContext().getSessionMap().get("usuarioLogado");
-
-		if (usuario != null) {
+		if (context.getExternalContext().getSessionMap().get("usuarioLogado") != null) {
 			return;
 		}
 
