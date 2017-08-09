@@ -35,20 +35,24 @@ public class ContatoBean {
 
 	@Transactional
 	public void listaContatos() {
+		setUsuario((Usuario) getContext().getExternalContext().getSessionMap().get("usuarioLogado"));
 		setParams(getContext().getExternalContext().getRequestParameterMap());
 		setParam(getParams().get("pagina"));
-		setContatos(getUsuario().getContatos());
-		if (null != getContatos()) {
-			getContext().getExternalContext().getSessionMap().put("contatos", getContatos());
-		} else {
-			System.out.println("você não tem contato adicionado");
-		}
+		// setContatos(getUsuario().getContatos());
+		// if (null != getContatos()) {
+		// getContext().getExternalContext().getSessionMap().put("contatos",
+		// getContatos());
+		// } else {
+		// System.out.println("você não tem contato adicionado");
+		// }
 		bean.navegar(getParam());
 	}
 
 	public void procurarEmail(AjaxBehaviorEvent ev) {
+		setUsuario((Usuario) getContext().getExternalContext().getSessionMap().get("usuarioLogado"));
 		getContato().setEmail(getContato().getEmail().trim());
 		if (!(getContato().getEmail().equals(getUsuario().getEmail()))) {
+			System.out.println("usuários diferentes");
 			setContato(usuarioDao.procuraEmail(getContato()));
 			if (null != getContato()) {
 				getContext().getExternalContext().getSessionMap().put("contato", getContato());
@@ -58,11 +62,12 @@ public class ContatoBean {
 		} else {
 			setContato(null);
 		}
+		System.out.println(getContato().getNome());
 	}
 
 	@Transactional
 	public void adicionar() {
-		
+		System.out.println(getContato().getId());
 	}
 
 	public Usuario getUsuario() {

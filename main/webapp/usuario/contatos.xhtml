@@ -10,12 +10,12 @@
 
 	<ui:define name="corpoMenu">
 
-		<h:dataTable value="#{contatos}" var="contato">
+		<!-- <h:dataTable value="#{contatos}" var="contato">
 			<h:column>
 				<f:facet name="header">Contatos...</f:facet>
 					#{contato.nome}
 			</h:column>
-		</h:dataTable>
+		</h:dataTable> -->
 
 		<h:form id="novoContato">
 			<h:commandLink value="+ contato" action="#{controladorBean.navegar}">

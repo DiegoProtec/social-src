@@ -23,19 +23,19 @@
 			<div>
 				<h:commandButton value="procurar">
 					<f:ajax execute="email" listener="#{contatoBean.procurarEmail}"
-						render="tbcontatos" update="contatosForm:email" resetValues="true" />
+						render="tbcontatos" />
 				</h:commandButton>
 			</div>
 
-			<h:dataTable id="tbcontatos" value="#{contato}" var="contato">
-				<h:column>
-					<f:facet name="header">Usuário</f:facet>
-						#{contato.nome}
-				</h:column>
+			<h:outputLabel value="Contatos..." />
+			<h:selectManyCheckbox id="tbcontatos" rendered="#{contato} != null" value="#{contatoBean.usuario.contatosid}">
+				<f:selectItems value="#{contato}" var="contato"
+					itemValue="#{contato.id}" itemLabel="contato.nome" />
+			</h:selectManyCheckbox>
 
-			</h:dataTable>
 			<div>
-				<h:commandButton value="adicionar" action="#{contatoBean.adicionar}" />
+				<h:commandButton value="adicionar" action="#{contatoBean.adicionar}"
+					immediate="true" />
 			</div>
 		</h:form>
 
