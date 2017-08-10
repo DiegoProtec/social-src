@@ -3,7 +3,7 @@ package br.com.social.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,20 +11,19 @@ import javax.transaction.Transactional;
 
 import br.com.social.dao.ContatoDao;
 import br.com.social.dao.UsuarioDao;
-import br.com.social.modelo.Contato;
+import br.com.social.modelo.Amizade;
 import br.com.social.modelo.Usuario;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class ContatoBean {
 
 	private ControladorBean bean = new ControladorBean();
 	private Usuario usuarioLogado = new Usuario();
 	private Usuario usuario = new Usuario();
-	private Contato contato = new Contato();
-	private List<Contato> contatos = new ArrayList<>();
+	private Amizade contato = new Amizade();
+	private List<Amizade> contatos = new ArrayList<>();
 	private FacesContext context;
-	private String param;
 
 	@Inject
 	private UsuarioDao usuarioDao;
@@ -38,11 +37,6 @@ public class ContatoBean {
 
 	@Transactional
 	public void adicionar() {
-		setUsuarioLogado((Usuario) getContext().getExternalContext().getSessionMap().get("usuarioLogado"));
-		setUsuario(usuarioDao.consultaUsuario(getUsuario().getEmail()));
-		getContato().setUsuario(getUsuarioLogado());
-		getContato().setContato(getUsuario());
-		contatoDao.salvar(getContato());
 		bean.navegar("/usuario/contatos.xhtml");
 	}
 
@@ -62,24 +56,20 @@ public class ContatoBean {
 		this.usuario = usuario;
 	}
 
-	public Contato getContato() {
+	public Amizade getContato() {
 		return contato;
 	}
 
-	public void setContato(Contato contato) {
+	public void setContato(Amizade contato) {
 		this.contato = contato;
 	}
 
-	public List<Contato> getContatos() {
-		return this.contatos;
+	public List<Amizade> getContatos() {
+		return contatos;
 	}
 
-	public String getParam() {
-		return this.param;
-	}
-
-	public void setParam(String param) {
-		this.param = param;
+	public void setContatos(List<Amizade> contatos) {
+		this.contatos = contatos;
 	}
 
 	public FacesContext getContext() {

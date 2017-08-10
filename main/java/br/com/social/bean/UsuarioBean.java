@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.social.dao.UsuarioDao;
-import br.com.social.modelo.Contato;
+import br.com.social.modelo.Amizade;
 import br.com.social.modelo.Mensagem;
 import br.com.social.modelo.Usuario;
 
@@ -17,7 +17,7 @@ import br.com.social.modelo.Usuario;
 public class UsuarioBean {
 
 	private ControladorBean bean = new ControladorBean();
-	private List<Contato> contatos = new ArrayList<>();
+	private List<Amizade> contatos = new ArrayList<>();
 	private List<Mensagem> mensagens = new ArrayList<>();
 	private Usuario usuario = new Usuario();
 	private FacesContext context;
@@ -65,11 +65,11 @@ public class UsuarioBean {
 		return this.usuario;
 	}
 
-	public List<Contato> getContatos() {
+	public List<Amizade> getContatos() {
 		return contatos;
 	}
 
-	public void setContatos(List<Contato> contatos) {
+	public void setContatos(List<Amizade> contatos) {
 		this.contatos = contatos;
 	}
 

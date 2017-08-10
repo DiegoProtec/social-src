@@ -14,7 +14,8 @@
 
 			<div>
 				<h:outputLabel value="email:" for="email" />
-				<h:inputText id="email" value="#{contatoBean.usuario.email}">
+				<h:inputText id="email" value="#{contatoBean.usuario.email}"
+					required="true">
 					<f:passThroughAttribute name="placeholder"
 						value="email@exemplo.com" />
 				</h:inputText>

@@ -32,8 +32,11 @@ public class Usuario {
 	@Column(name = "nome_usuario")
 	private String nome;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", targetEntity = Contato.class, fetch = FetchType.LAZY)
-	private List<Contato> contatos;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "convidante", targetEntity = Amizade.class, fetch = FetchType.LAZY)
+	private List<Amizade> convidantes;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "convidado", targetEntity = Amizade.class, fetch = FetchType.LAZY)
+	private List<Amizade> convidados;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "participante", targetEntity = ConversasParticipantes.class, fetch = FetchType.LAZY)
 	private List<ConversasParticipantes> conversas;
@@ -73,31 +76,14 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public List<Contato> getContatos() {
-		List<Contato> listaSegura = Collections.unmodifiableList(this.contatos);
+	public List<Amizade> getConvidantes() {
+		List<Amizade> listaSegura = Collections.unmodifiableList(this.convidantes);
 		return listaSegura;
 	}
 
-	public List<ConversasParticipantes> getConversas() {
-		List<ConversasParticipantes> listaSegura = Collections.unmodifiableList(this.conversas);
+	public List<Amizade> getConvidados() {
+		List<Amizade> listaSegura = Collections.unmodifiableList(this.convidados);
 		return listaSegura;
-	}
-
-	public List<Mensagem> getMensagens() {
-		List<Mensagem> listaSegura = Collections.unmodifiableList(this.mensagens);
-		return listaSegura;
-	}
-
-	public void adicionaContatos(Contato contato) {
-		this.contatos.add(contato);
-	}
-
-	public void adicionaConversas(ConversasParticipantes conversa) {
-		this.conversas.add(conversa);
-	}
-
-	public void adicionaMensagens(Mensagem mensagem) {
-		this.mensagens.add(mensagem);
 	}
 
 }
