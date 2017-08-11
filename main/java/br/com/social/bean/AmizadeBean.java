@@ -16,7 +16,7 @@ import br.com.social.modelo.Usuario;
 
 @Named
 @RequestScoped
-public class ContatoBean {
+public class AmizadeBean {
 
 	private ControladorBean bean = new ControladorBean();
 	private Usuario usuarioLogado = new Usuario();
@@ -31,7 +31,7 @@ public class ContatoBean {
 	@Inject
 	private ContatoDao contatoDao;
 
-	public ContatoBean() {
+	public AmizadeBean() {
 		this.context = FacesContext.getCurrentInstance();
 	}
 
