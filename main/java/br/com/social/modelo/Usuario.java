@@ -1,6 +1,5 @@
 package br.com.social.modelo;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,17 +31,8 @@ public class Usuario {
 	@Column(name = "nome_usuario")
 	private String nome;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "convidante", targetEntity = Amizade.class, fetch = FetchType.LAZY)
-	private List<Amizade> convidantes;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "convidado", targetEntity = Amizade.class, fetch = FetchType.LAZY)
-	private List<Amizade> convidados;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "participante", targetEntity = ConversasParticipantes.class, fetch = FetchType.LAZY)
-	private List<ConversasParticipantes> conversas;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "emissor", targetEntity = Mensagem.class, fetch = FetchType.LAZY)
-	private List<Mensagem> mensagens;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Usuario> contatos;
 
 	public Long getId() {
 		return id;
@@ -76,14 +66,7 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public List<Amizade> getConvidantes() {
-		List<Amizade> listaSegura = Collections.unmodifiableList(this.convidantes);
-		return listaSegura;
+	public void adicionaContatos(Usuario usuario) {
+		this.contatos.add(usuario);
 	}
-
-	public List<Amizade> getConvidados() {
-		List<Amizade> listaSegura = Collections.unmodifiableList(this.convidados);
-		return listaSegura;
-	}
-
 }

@@ -22,6 +22,10 @@ public class UsuarioDao {
 		getManager().persist(usuario);
 	}
 
+	public Usuario buscaPorId(Integer id) {
+		return manager.find(Usuario.class, id);
+	}
+
 	public Usuario consultaUsuario(Usuario usuario) {
 		String jpql = "select u from Usuario u where u.email = :pEmail and u.senha = :pSenha";
 		setQuery(getManager().createQuery(jpql, Usuario.class));
@@ -59,16 +63,8 @@ public class UsuarioDao {
 		return getUsuario();
 	}
 
-	public List<Usuario> procuraNome(Usuario usuario) {
-		String jpql = "select u from Usuario u where u.nome like :pNome";
-		setQuery(getManager().createQuery(jpql, Usuario.class));
-		getQuery().setParameter("pNome", "%" + usuario.getNome() + "%");
-		try {
-			setUsuarios(getQuery().getResultList());
-		} catch (NoResultException e) {
-			return getUsuarios();
-		}
-		return getUsuarios();
+	public void buscaContatos(Usuario usuario) {
+
 	}
 
 	private EntityManager getManager() {

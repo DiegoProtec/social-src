@@ -14,7 +14,7 @@
 
 			<div>
 				<h:outputLabel value="email:" for="email" />
-				<h:inputText id="email" value="#{amizadeBean.usuario.email}"
+				<h:inputText id="email" value="#{usuarioBean.contato.email}"
 					required="true">
 					<f:passThroughAttribute name="placeholder"
 						value="email@exemplo.com" />
@@ -22,8 +22,8 @@
 			</div>
 
 			<div>
-				<h:commandButton value="adicionar" action="#{amizadeBean.adicionar}"
-					immediate="true" />
+				<h:commandButton value="adicionar"
+					action="#{usuarioBean.adicionarContato}" />
 			</div>
 		</h:form>
 
