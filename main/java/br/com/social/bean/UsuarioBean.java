@@ -26,10 +26,10 @@ public class UsuarioBean {
 	}
 
 	@Transactional
-	public void cadastrar() {
-		if (null == usuarioDao.consultaUsuario(getUsuario().getEmail())) {
+	public void cadastrarUsuario() {
+		if (null == usuarioDao.consultarUsuario(getUsuario().getEmail())) {
 			usuarioDao.salvar(getUsuario());
-			setUsuario(usuarioDao.consultaUsuario(getUsuario()));
+			setUsuario(usuarioDao.consultarUsuario(getUsuario().getId()));
 			if (null != getUsuario()) {
 				getContext().getExternalContext().getSessionMap().put("usuarioLogado", getUsuario());
 				setPagina("/usuario/usuario.xhtml");
@@ -40,16 +40,25 @@ public class UsuarioBean {
 
 	@Transactional
 	public void adicionarContato() {
+		setPagina("/usuario/contato/cadastroContato.xhtml");
 		setUsuario((Usuario) getContext().getExternalContext().getSessionMap().get("usuarioLogado"));
-		setContato(usuarioDao.consultaUsuario(getContato().getEmail()));
-		if (null != getContato()) {
-			getUsuario().adicionaContatos(getContato());
-			// getContext().getExternalContext().getSessionMap().put("contatos",
-			// usuarioDao.buscaContatos(getUsuario()));
-			System.out.println(getContext().getExternalContext().getSessionMap().get("contatos"));
-			setPagina("/usuario/contatos.xhtml");
+		for (Usuario contato : getUsuario().getContatos()) {
+			System.out.println(contato.getEmail());
 		}
-
+		System.out.println("antes de chamar consultarUsuario por email");
+		setContato(usuarioDao.consultarUsuario(getContato().getEmail()));
+		System.out.println(getContato().getEmail());
+		if (null != getContato()) {
+			getUsuario().setContatos(getContato());
+			System.out.println("antes de chamar alterarLista");
+			setUsuario(usuarioDao.alterarLista(getUsuario()));
+			setPagina("/usuario/contatos.xhtml");
+			for (Usuario contato : getUsuario().getContatos()) {
+				System.out.println(contato.getEmail());
+			}
+		} else {
+			bean.navegar(getPagina());
+		}
 	}
 
 	private void setUsuario(Usuario usuario) {

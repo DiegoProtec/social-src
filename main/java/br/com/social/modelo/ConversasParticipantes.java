@@ -1,6 +1,5 @@
 package br.com.social.modelo;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,15 +14,14 @@ public class ConversasParticipantes {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_participante")
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "id_conversafk", nullable = false)
+	@JoinColumn
 	private Conversa conversa;
 
 	@ManyToOne
-	@JoinColumn(name = "id_usuariofk", nullable = false)
+	@JoinColumn
 	private Usuario participante;
 
 	public int getId() {

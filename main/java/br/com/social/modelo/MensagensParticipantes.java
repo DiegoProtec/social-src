@@ -2,12 +2,10 @@ package br.com.social.modelo;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,18 +17,14 @@ public class MensagensParticipantes {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "hora_recebida_mensagem", nullable = true)
 	private LocalDateTime horaRecebida;
 
-	@Column(name = "hora_visualizada_mensagem", nullable = true)
 	private LocalDateTime horaVisualizada;
 
 	@ManyToOne
-	@JoinColumn(name = "id_mensagemfk", nullable = false)
 	private Mensagem mensagem;
 
 	@ManyToOne
-	@JoinColumn(name = "id_usuariofk", nullable = false)
 	private Usuario destinatario;
 
 	public int getId() {

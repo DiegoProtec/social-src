@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -22,21 +21,14 @@ public class Mensagem {
 	private int id;
 
 	@Lob
-	@Column(name = "mensagem_mensagem", nullable = false)
 	private String mensagem;
 
-	@Column(name = "hora_envio_mensagem", nullable = false)
 	private LocalDateTime horaEnvio;
 
-	@Column(name = "status_mensagem", nullable = false)
-	private int status;
-
 	@ManyToOne
-	@JoinColumn(name = "id_conversafk", nullable = false)
 	private Conversa conversa;
 
 	@ManyToOne
-	@JoinColumn(name = "id_usuariofk", nullable = false)
 	private Usuario emissor;
 
 	public int getId() {

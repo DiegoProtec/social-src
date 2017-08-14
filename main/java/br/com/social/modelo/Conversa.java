@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +18,6 @@ public class Conversa {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_conversa")
 	private int id;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "conversa", targetEntity = ConversasParticipantes.class, fetch = FetchType.LAZY)

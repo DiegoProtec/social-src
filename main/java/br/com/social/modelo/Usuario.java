@@ -2,36 +2,34 @@ package br.com.social.modelo;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "tb_usuario", uniqueConstraints = @UniqueConstraint(columnNames = { "email_usuario" }))
+@Table(name = "tb_usuario", uniqueConstraints = @UniqueConstraint(columnNames = { "email" }))
 public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_usuario")
 	private Long id;
 
-	@Column(name = "email_usuario")
 	private String email;
 
-	@Column(name = "senha_usuario")
 	private String senha;
 
-	@Column(name = "nome_usuario")
 	private String nome;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name = "rl_amizade", joinColumns = {
+			@JoinColumn(name = "id_usuario", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "id_contato", referencedColumnName = "id", nullable = false) })
 	private List<Usuario> contatos;
 
 	public Long getId() {
@@ -66,7 +64,12 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public void adicionaContatos(Usuario usuario) {
+	public List<Usuario> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(Usuario usuario) {
 		this.contatos.add(usuario);
 	}
+
 }

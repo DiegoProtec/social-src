@@ -27,7 +27,7 @@ public class LoginBean {
 
 	@Transactional
 	public void logar() {
-		setUsuario(usuarioDao.consultaUsuario(getUsuario()));
+		setUsuario(usuarioDao.consultarUsuario(getUsuario()));
 		if (null != getUsuario()) {
 			getContext().getExternalContext().getSessionMap().put("usuarioLogado", getUsuario());
 			setPagina("/usuario/usuario.xhtml");

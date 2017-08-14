@@ -1,8 +1,5 @@
 package br.com.social.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -15,84 +12,50 @@ public class UsuarioDao {
 	@PersistenceContext
 	private EntityManager manager;
 	private TypedQuery<Usuario> query;
-	private List<Usuario> usuarios = new ArrayList<>();
-	private Usuario usuario = null;
 
 	public void salvar(Usuario usuario) {
-		getManager().persist(usuario);
+		manager.persist(usuario);
 	}
 
-	public Usuario buscaPorId(Integer id) {
+	public Usuario alterarLista(Usuario usuario) {
+		System.out.println("antes de merge");
+		manager.merge(usuario);
+		System.out.println("depois de merge");
+		String jpql = "select distinct(u) from Usuario u "
+				+ "join fetch u.contatos";
+		query = manager.createQuery(jpql, Usuario.class);
+		return query.getSingleResult();
+	}
+
+	public Usuario consultarUsuario(Long id) {
 		return manager.find(Usuario.class, id);
 	}
 
-	public Usuario consultaUsuario(Usuario usuario) {
-		String jpql = "select u from Usuario u where u.email = :pEmail and u.senha = :pSenha";
-		setQuery(getManager().createQuery(jpql, Usuario.class));
-		getQuery().setParameter("pEmail", usuario.getEmail());
-		getQuery().setParameter("pSenha", usuario.getSenha());
+	public Usuario consultarUsuario(String email) {
+		String jpql = "select distinct(u) from Usuario u"
+				+ " left join u.contatos"
+				+ " where u.email = :pEmail";
+		query = manager.createQuery(jpql, Usuario.class);
+		query.setParameter("pEmail", email);
 		try {
-			setUsuario(getQuery().getSingleResult());
+			return query.getSingleResult();
 		} catch (NoResultException e) {
-			return getUsuario();
+			return null;
 		}
-		return getUsuario();
 	}
 
-	public Usuario consultaUsuario(String email) {
-		String jpql = "select u from Usuario u where u.email = :pEmail";
-		setQuery(getManager().createQuery(jpql, Usuario.class));
-		getQuery().setParameter("pEmail", email);
+	public Usuario consultarUsuario(Usuario usuario) {
+		String jpql = "select distinct(u) from Usuario u"
+				+ " left join u.contatos"
+				+ " where u.email = :pEmail and u.senha = :pSenha";
+		query = manager.createQuery(jpql, Usuario.class);
+		query.setParameter("pEmail", usuario.getEmail());
+		query.setParameter("pSenha", usuario.getSenha());
 		try {
-			setUsuario(getQuery().getSingleResult());
+			return query.getSingleResult();
 		} catch (NoResultException e) {
-			return getUsuario();
+			return null;
 		}
-		return getUsuario();
-	}
-
-	public Usuario procuraEmail(Usuario usuario) {
-		String jpql = "select u from Usuario u where u.email = :pEmail";
-		setQuery(getManager().createQuery(jpql, Usuario.class));
-		getQuery().setParameter("pEmail", usuario.getEmail());
-		try {
-			setUsuario(getQuery().getSingleResult());
-		} catch (NoResultException e) {
-			return getUsuario();
-		}
-		return getUsuario();
-	}
-
-	public void buscaContatos(Usuario usuario) {
-
-	}
-
-	private EntityManager getManager() {
-		return manager;
-	}
-
-	private TypedQuery<Usuario> getQuery() {
-		return query;
-	}
-
-	private void setQuery(TypedQuery<Usuario> query) {
-		this.query = query;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
 	}
 
 }
